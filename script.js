@@ -102,5 +102,30 @@ inputField.addEventListener("keydown", (event) => {
 });
 modeSelect.addEventListener("change", () => startTest());
 
+
+// Clavier virtuel : clic sur une touche
+document.querySelectorAll(".key").forEach(key => {
+    key.addEventListener("click", () => {
+        const value = key.textContent;
+
+        if (value === "←") {
+            // Supprimer le dernier caractère
+            inputField.value = inputField.value.slice(0, -1);
+        } else if (value === "Espace") {
+            // Simuler appui sur espace
+            const spaceEvent = new KeyboardEvent("keydown", {
+                key: " ",
+                bubbles: true
+            });
+            inputField.dispatchEvent(spaceEvent);
+        } else {
+            // Ajouter la lettre cliquée
+            inputField.value += value.toLowerCase(); // on met en minuscule si tes mots sont en minuscules
+        }
+
+        inputField.focus(); // Focus sur champ de saisie
+    });
+});
+
 // Start the test
 startTest();

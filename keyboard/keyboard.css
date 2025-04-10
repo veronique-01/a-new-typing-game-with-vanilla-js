@@ -1,17 +1,10 @@
 .keyboard {
-    position: fixed;
-    left: 0;
-    bottom: 0;
+    position: relative;
     width: 100%;
-    padding: 5px 0;
-    background:blue;
-    box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
+    padding: 5px 0 20px;
     user-select: none;
-    transition: bottom 0.4s;
-}
-
-.keyboard--hidden {
-    bottom: -100%;
+    transition: bottom 0.4s, opacity 0.3s ease;
+    border-radius: 10px;
 }
 
 .keyboard__keys {
@@ -19,28 +12,34 @@
 }
 
 .keyboard__key {
+
     height: 45px;
     width: 6%;
     max-width: 90px;
-    margin: 3px;
-    border-radius: 4px;
-    border: none;
-    background: rgba(255, 255, 255, 0.2);
-    color: #ffffff;
-    font-size: 1.05rem;
-    outline: none;
-    cursor: pointer;
+    margin: 5px;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: transparent;
+    color: #fff;
+    font-size: 1.1rem;
+    box-shadow: 0 4px 8px rgb(0, 255, 255), inset 0 0 10px rgba(0, 255, 255, 0.671);
+    transition: transform 0.1s, box-shadow 0.2s ease;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    vertical-align: top;
-    padding: 0;
-    -webkit-tap-highlight-color: transparent;
     position: relative;
+  
 }
 
-.keyboard__key:active {
-    background: rgba(255, 255, 255, 0.12);
+.keyboard__key:hover {
+    box-shadow: 0 0 12px #00ffe7, 0 0 6px #00ffe7;
+}
+
+.keyboard__key--active {
+    background-color: #00ff88 !important;
+    color: white;
+    box-shadow: 0 0 15px #00ff88, inset 0 0 10px #00ff88;
+    transform: translateY(2px);
 }
 
 .keyboard__key--wide {
@@ -68,5 +67,5 @@
 }
 
 .keyboard__key--dark {
-    background: rgba(0, 0, 0, 0.25);
+    background: rgba(0, 0, 0, 0.35);
 }

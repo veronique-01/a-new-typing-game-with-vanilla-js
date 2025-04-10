@@ -7,6 +7,9 @@ const modeSelect = document.getElementById("mode");
 const wordDisplay = document.getElementById("word-display");
 const inputField = document.getElementById("input-field");
 const results = document.getElementById("results");
+const keyboardElement = document.getElementById("keyboard");
+
+const correctSound = new Audio('./sounds/correct.mp3');
 
 const words = {
   easy: ["apple", "banana", "grape", "orange", "cherry"],
@@ -43,6 +46,11 @@ const getWPM = (elapsedSeconds) => {
   return ((wordsTyped / elapsedSeconds) * 60).toFixed(2);
 };
 
+const getRandomWord = (mode) => {
+  const wordList = words[mode];
+  return wordList[Math.floor(Math.random() * wordList.length)];
+};
+
 const startTest = (wordCount = 10) => {
   wordsToType.length = 0;
   currentWordIndex = 0;
@@ -73,22 +81,16 @@ const startTest = (wordCount = 10) => {
   });
 };
 
-const getRandomWord = (mode) => {
-  const wordList = words[mode];
-  return wordList[Math.floor(Math.random() * wordList.length)];
+const updateWordColor = (typed, target) => {
+  const spans = wordDisplay.querySelectorAll(".word-span");
+  spans[currentWordIndex].style.color = target.startsWith(typed) ? "black" : "crimson";
 };
-
 
 inputField.addEventListener("input", () => {
   const typed = inputField.value.trim();
-  const currentTarget = wordsToType[currentWordIndex];
-  const spans = wordDisplay.querySelectorAll(".word-span");
-
-
-  spans[currentWordIndex].style.color =
-    currentTarget.startsWith(typed) ? "black" : "crimson";
+  const target = wordsToType[currentWordIndex];
+  updateWordColor(typed, target);
 });
-
 
 inputField.addEventListener("keydown", (event) => {
   if (event.key === " ") {
@@ -98,20 +100,26 @@ inputField.addEventListener("keydown", (event) => {
     const target = wordsToType[currentWordIndex];
     const span = wordDisplay.querySelectorAll(".word-span")[currentWordIndex];
 
+    // Stats
     const minLength = Math.min(typed.length, target.length);
     for (let i = 0; i < minLength; i++) {
       if (typed[i] === target[i]) correctChars++;
     }
     totalTypedChars += typed.length;
 
+    // Résultat mot
     if (typed === target) {
       span.style.color = "limegreen";
+      correctSound.play();
     } else {
       span.style.color = "crimson";
+      keyboardElement.classList.add("shake");
+      setTimeout(() => {
+        keyboardElement.classList.remove("shake");
+      }, 300);
     }
 
     span.classList.remove("current-word");
-
     currentWordIndex++;
 
     if (currentWordIndex >= wordsToType.length) {
@@ -123,6 +131,18 @@ inputField.addEventListener("keydown", (event) => {
       const wpm = getWPM(elapsedTime);
 
       results.textContent = `Test terminé ! WPM : ${wpm} | Accuracy : ${accuracy.toFixed(2)}%`;
+
+
+      const starsContainer = document.createElement("p");
+      starsContainer.className = "fs-2 text-warning text-center mt-3";
+
+      let stars = "★☆☆";
+      if (accuracy >= 90 && wpm >= 60) stars = "★★★";
+      else if (accuracy >= 70 && wpm >= 40) stars = "★★☆";
+
+      starsContainer.textContent = `Score : ${stars}`;
+      results.insertAdjacentElement("afterend", starsContainer);
+
     } else {
       wordDisplay.querySelectorAll(".word-span")[currentWordIndex].classList.add("current-word");
       inputField.value = "";

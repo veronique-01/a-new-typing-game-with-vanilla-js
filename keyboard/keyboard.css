@@ -19,10 +19,10 @@
     margin: 5px;
     border-radius: 6px;
     border: 1px solid rgba(255, 255, 255, 0.15);
-    background: transparent;
-    color: #fff;
+    background: rgb(255, 254, 254);
+    color: #575757;
     font-size: 1.1rem;
-    box-shadow: 0 4px 8px rgb(0, 255, 255), inset 0 0 10px rgba(0, 255, 255, 0.671);
+    box-shadow: 0 4px 8px rgb(221, 253, 253), inset 0 0 10px rgba(237, 252, 252, 0.671);
     transition: transform 0.1s, box-shadow 0.2s ease;
     display: inline-flex;
     align-items: center;

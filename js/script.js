@@ -9,7 +9,7 @@ const inputField = document.getElementById("input-field");
 const results = document.getElementById("results");
 const keyboardElement = document.getElementById("keyboard");
 
-const correctSound = new Audio('./sounds/correct.mp3');
+const correctSound = new Audio('../sound/correct.mp3');
 
 const words = {
   easy: ["apple", "banana", "grape", "orange", "cherry"],
@@ -34,6 +34,7 @@ const startChrono = () => {
   timerDisplay.className = "fw-bold fs-5 text-danger text-center mt-3";
   timerDisplay.textContent = "00:00";
   results.insertAdjacentElement("afterend", timerDisplay);
+
 
   timerInterval = setInterval(() => {
     const now = Date.now();
@@ -140,7 +141,7 @@ inputField.addEventListener("keydown", (event) => {
       if (accuracy >= 90 && wpm >= 60) stars = "★★★";
       else if (accuracy >= 70 && wpm >= 40) stars = "★★☆";
 
-      starsContainer.textContent = `Score : ${stars}`;
+      starsContainer.textContent = `${stars}`;
       results.insertAdjacentElement("afterend", starsContainer);
 
     } else {
@@ -149,6 +150,7 @@ inputField.addEventListener("keydown", (event) => {
     }
   }
 });
+
 
 modeSelect.addEventListener("change", () => startTest());
 startTest();

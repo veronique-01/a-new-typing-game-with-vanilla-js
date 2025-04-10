@@ -39,7 +39,6 @@ const Keyboard = {
             });
         });
 
-
         document.addEventListener("keydown", (e) => {
             const key = e.key.toLowerCase();
 
